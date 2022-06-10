@@ -66,3 +66,19 @@ extension UIStackView {
         arrangedSubviews
     }
 }
+
+extension UIScrollView {
+    var isOrthogonalScrollView: Bool {
+        let isInCollectionView = superview as? UICollectionView != nil
+        return isInCollectionView && subviews.contains { $0.isSkeletonable }
+    }
+
+    override public var isSkeletonable: Bool {
+        get {
+            super.isSkeletonable || isOrthogonalScrollView
+        }
+        set {
+            super.isSkeletonable = newValue
+        }
+    }
+}
